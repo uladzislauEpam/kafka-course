@@ -1,5 +1,7 @@
 package com.kafka.course.k2;
 
+import com.kafka.course.k2.model.Reposition;
+import com.kafka.course.k2.model.Signal;
 import java.util.concurrent.CountDownLatch;
 import lombok.Getter;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -13,17 +15,9 @@ public class OutputConsumer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(OutputConsumer.class);
 
-  @Getter
-  private CountDownLatch latch = new CountDownLatch(1);
-
-  @Getter
-  private String payload;
-
-  @KafkaListener(topics = "output")
-  public void receiveListener1(ConsumerRecord<?, ?> consumerRecord) {
+  @KafkaListener(topics = "output", groupId = "group2", containerFactory = "kafkaListenerContainerFactoryRep")
+  public void receiveListener3(ConsumerRecord<?, Reposition> consumerRecord) {
     LOGGER.info("================= New output: {}", consumerRecord.value().toString());
-    payload = consumerRecord.value().toString();
-    latch.countDown();
   }
 
 }

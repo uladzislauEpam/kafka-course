@@ -1,5 +1,7 @@
 package com.kafka.course.k2;
 
+import com.kafka.course.k2.model.Reposition;
+import com.kafka.course.k2.model.Signal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -8,9 +10,16 @@ import org.springframework.stereotype.Component;
 public class Producer {
 
   @Autowired
-  private KafkaTemplate<String, Object> kafkaTemplate;
+  private KafkaTemplate<String, Signal> kafkaTemplateSig;
 
-  public void send(String topic, Object object) {
-    kafkaTemplate.send(topic, object);
+  @Autowired
+  private KafkaTemplate<String, Reposition> kafkaTemplateRep;
+
+  public void send(String topic, Signal signal) {
+    kafkaTemplateSig.send(topic, signal);
+  }
+
+  public void send(String topic, Reposition reposition) {
+    kafkaTemplateRep.send(topic, reposition);
   }
 }

@@ -14,14 +14,48 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 public class Consumer {
 
   public static void main(String[] args) {
+//    Logger logger = LoggerFactory.getLogger(Consumer.class);
+//    Properties properties = new Properties();
+//    String bootstrapServers = "127.0.0.1:9092";
+//    String groupId = "group2";
+//    String resetConfig = "earliest";
+//    String topic = "input";
+//    String autoCommit = "true";
+//    String commitInterval = "100000";
+//
+//    properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+//    properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+//    properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+//    properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+//    properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, resetConfig);
+//    properties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, autoCommit);
+//    properties.setProperty(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, commitInterval);
+//
+//
+//    KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
+//    consumer.subscribe(Collections.singletonList(topic));
+//
+//    while (true) {
+//      ConsumerRecords<String,String> records = consumer.poll(Duration.ofMillis(1000));
+//      for (ConsumerRecord<String,String> record : records) {
+//        logger.info(" ============================= Data received ==============================");
+//        logger.info(" Key: " + record.key() + " Value " + record.value());
+//        logger.info(" Partition: " + record.partition() + " Offset " + record.offset());
+//      }
+//    }
+    kafka();
+    kafka();
+  }
+
+  private static void kafka() {
     Logger logger = LoggerFactory.getLogger(Consumer.class);
     Properties properties = new Properties();
     String bootstrapServers = "127.0.0.1:9092";
-    String groupId = "group1";
+    String groupId = Integer.toString((int) (Math.random()*Integer.MAX_VALUE));
     String resetConfig = "earliest";
-    String topic = "1";
+    String topic = "input";
     String autoCommit = "true";
-    String commitInterval = "100";
+    String commitInterval = "100000";
 
     properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
@@ -35,14 +69,13 @@ public class Consumer {
     KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
     consumer.subscribe(Collections.singletonList(topic));
 
-    while (true) {
-      ConsumerRecords<String,String> records = consumer.poll(Duration.ofMillis(1000));
-      for (ConsumerRecord<String,String> record : records) {
-        logger.info(" ============================= Data received ==============================");
-        logger.info(" Key: " + record.key() + " Value " + record.value());
-        logger.info(" Partition: " + record.partition() + " Offset " + record.offset());
-      }
+    ConsumerRecords<String,String> records = consumer.poll(Duration.ofMillis(1000));
+    for (ConsumerRecord<String,String> record : records) {
+      logger.info(" ============================= Data received ==============================");
+      logger.info(" Key: " + record.key() + " Value " + record.value());
+      logger.info(" Partition: " + record.partition() + " Offset " + record.offset());
     }
+    logger.info(" +++++++++++ TOTAL RECORDS: " + records.count() +  " ++++++++++++++");
   }
 
 }

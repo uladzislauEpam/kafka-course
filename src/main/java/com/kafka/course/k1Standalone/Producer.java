@@ -15,6 +15,7 @@ public class Producer {
     Properties properties = new Properties();
     String bootstrapServers = "127.0.0.1:9092";
     String topic = "1";
+    String message = "UL";
 
     properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -22,7 +23,7 @@ public class Producer {
 
     KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
-    ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, "id_1", "[Mock data]");
+    ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, "id_1", message);
 
     producer.send(producerRecord, (recordMetadata, e) -> {
       if (e != null) {
