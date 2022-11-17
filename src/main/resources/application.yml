@@ -12,3 +12,7 @@ spring:
       auto-commit-interval-ms: 1000
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+logging:
+  level:
+    org.apache: OFF
+    kafka: OFF
