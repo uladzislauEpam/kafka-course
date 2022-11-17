@@ -1,11 +1,9 @@
 package com.kafka.course.k2;
 
-import com.kafka.course.k2.model.Signal;
 import java.util.concurrent.CountDownLatch;
 import lombok.Getter;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,7 +28,7 @@ public class InputConsumer {
   private String payload3;
 
   @KafkaListener(topics = "input")
-  public void receiveListener1(@Payload Signal signal) {
+  public void receiveListener1(ConsumerRecord<?, ?> consumerRecord) {
     payload1 = consumerRecord.value().toString();
     latch1.countDown();
   }
