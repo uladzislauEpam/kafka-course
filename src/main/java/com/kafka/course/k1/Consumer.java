@@ -20,11 +20,15 @@ public class Consumer {
   @Getter
   private String payload;
 
-  @KafkaListener(topics = "1")
+  @KafkaListener(topics = "1", groupId = "group1")
   public void receive(ConsumerRecord<?, ?> consumerRecord) {
     LOGGER.info("================= Message received: {}", consumerRecord.value().toString());
     payload = consumerRecord.value().toString();
     latch.countDown();
+  }
+
+  public void resetLatch() {
+    latch = new CountDownLatch(1);
   }
 
 }

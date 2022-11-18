@@ -44,7 +44,6 @@ public class Consumer {
 //      }
 //    }
     kafka();
-    kafka();
   }
 
   private static void kafka() {
@@ -53,7 +52,7 @@ public class Consumer {
     String bootstrapServers = "127.0.0.1:9092";
     String groupId = Integer.toString((int) (Math.random()*Integer.MAX_VALUE));
     String resetConfig = "earliest";
-    String topic = "input";
+    String topic = "1";
     String autoCommit = "true";
     String commitInterval = "100000";
 
