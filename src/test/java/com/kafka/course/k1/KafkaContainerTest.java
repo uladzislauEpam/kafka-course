@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -56,8 +58,11 @@ public class KafkaContainerTest {
     consumer.resetLatch();
   }
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaContainerTest.class);
+
   @Test
   public void givenKafkaDockerContainer_whenSendingWithDefaultTemplate_thenMessageReceived() throws Exception {
+    LOGGER.info("KAFKA SERVER: " + kafka.getBootstrapServers());
     String data = "Sending with Template";
     template.send(topic, data);
     boolean messageConsumed = consumer.getLatch().await(10, TimeUnit.SECONDS);

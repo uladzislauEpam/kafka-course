@@ -2,7 +2,9 @@ spring:
   kafka:
     producer:
       retries: 0
-      acks: 0
+      # 1. applicatin.yml Asks = 0, doesn’t guarantee at least once delivery: should be all?
+      acks: all
+      enable-idempotence: true
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
